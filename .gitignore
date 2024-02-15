@@ -3,4 +3,4 @@ include/
 lib/
 share/
 pyvenv.cfg
-*.png
+/*.png
