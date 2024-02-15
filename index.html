@@ -2,29 +2,7 @@
 <html>
 <!-- Made by Guy Dupont: gvy.dvpont@gmail.com -->
 <body>
-    <script>
-        function downloadBase64File(base64Data, filename) {
-            const ascii = atob(base64Data);
-            const bytes = new Array(ascii.length);
-            for (let i = 0; i < ascii.length; i++) {
-                bytes[i] = ascii.charCodeAt(i);
-            }
-            const byteArray = new Uint8Array(bytes);
-            const blob = new Blob([byteArray], { type: "application/octet-stream" });
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = filename;
-            // :P
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-        const params = new URLSearchParams(window.location.search);
-        // use fragment so data not sent to server, idea: @HeNeArXn@chaos.social 
-        const data = window.location.hash.substring(1);
-        const filename = params.get("f");
-        downloadBase64File(decodeURIComponent(data), filename);
-    </script>
+    Workin on it...
 </body>
 
 </html>

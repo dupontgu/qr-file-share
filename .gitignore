@@ -1,0 +1,6 @@
+bin/
+include/
+lib/
+share/
+pyvenv.cfg
+*.png
