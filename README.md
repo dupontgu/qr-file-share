@@ -12,3 +12,5 @@ Imagine: You want to share a file with a friend nearby. You want to share from a
 To generate one of these QR codes, you can either:
 1. use the [web app](https://dupontgu.github.io/qr-file-share/) (this can be saved to your computer to run offline).
 2. use the included [python script](./generate_qr.py).
+   1. Install the dependencies using `pip install -r requirements.txt`
+   2. Run using `python generate_pr.py input_file.txt`. The QR code png will be generated with the same filename (+ `.png`) by default, or you can explictly pass in an alternate output filename as a second argument.

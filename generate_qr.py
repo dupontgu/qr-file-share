@@ -17,10 +17,8 @@ with open(in_filename, "rb") as f:
     file_data = f.read()
      
 b64_file_data = base64.b64encode(file_data).decode('ascii')
-print(b64_file_data)
 url_file_data = urllib.parse.quote_plus(b64_file_data)
 full_url = f"{WEB_URL_PREFIX}?f={out_filename}#{url_file_data}"
-# print("encoded url:", full_url)
-# print("len", len(full_url))
-# qr_img = qrcode.make(full_url)
-# qr_img.save(f"{out_filename}_qr.png")
+print("encoded url:", full_url)
+qr_img = qrcode.make(full_url)
+qr_img.save(f"{out_filename}_qr.png")
