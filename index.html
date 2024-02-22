@@ -1,8 +1,63 @@
 <!DOCTYPE html>
-<html>
-<!-- Made by Guy Dupont: gvy.dvpont@gmail.com -->
+<html lang="en">
+<!-- Created by Guy Dupont (gvy.dvpont@gmail.com), 2024 -->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create QR</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+</head>
+
 <body>
-    Workin on it...
+    <div>
+        <p>
+            Use this tool to generate a QR code to transfer a small file (< 2kb). The file is encoded into the QR code
+                itself and <b>is not uploaded to any server</b>.
+                <br><br>The file's data never leaves your computer. (Though this site's server can technically see the
+                file's name)
+                <br><br>To generate one of these QR codes without needing to load this page from the internet, you can
+                either:
+                <ul>
+                    <li>save it to your computer (File -> Save As -> Webpage, Complete)
+                    <li>use the Python script in the <a href="https://github.com/dupontgu/qr-file-share">GitHub
+                            repository</a>
+                </ul>
+
+        </p>
+    </div>
+    <input type="file" id="fileInput">
+    <button id="encodeButton">Generate QR</button>
+    <div id="qrcode"></div>
+
+    <script>
+        const WEB_URL_PREFIX = "https://dupontgu.github.io/qr-file-share/dl.html"
+        function onFileLoaded(filename, dataUrl) {
+            if (dataUrl.length + filename.length > 2000) {
+                alert("File (and/or file name) is too large for QR code!");
+                return;
+            }
+            let b64 = encodeURIComponent(dataUrl.split(',')[1]); // will include data url preamble
+            let url = `${WEB_URL_PREFIX}?f=${filename}#${b64}`
+            document.getElementById('qrcode').innerHTML = '';
+            new QRCode(document.getElementById('qrcode'), {
+                text: url,
+                width: 512,
+                height: 512
+            });
+        }
+        document.getElementById('encodeButton').addEventListener('click', function () {
+            let fileInput = document.getElementById('fileInput');
+            let file = fileInput.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = (e) => { onFileLoaded(file.name, e.target.result) }
+                reader.readAsDataURL(file);
+            } else {
+                alert("Please select a file first.");
+            }
+        });
+    </script>
+
 </body>
 
 </html>
