@@ -5,13 +5,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Create QR</title>
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 </head>
 
 <body>
     <div>
         <p>
-            Use this tool to generate a QR code to transfer a small file (< 2kb). The file is encoded into the QR code
+            Use this tool to generate a QR code to transfer a small file (< 2.9kb). The file is encoded into the QR code
                 itself and <b>is not uploaded to any server</b>.
                 <br><br>The file's data never leaves your computer. (Though this site's server can technically see the
                 file's name)
@@ -32,17 +32,19 @@
     <script>
         const WEB_URL_PREFIX = "https://dupontgu.github.io/qr-file-share/dl.html"
         function onFileLoaded(filename, dataUrl) {
-            if (dataUrl.length + filename.length > 2000) {
+            if (dataUrl.length + filename.length > 2900) {
                 alert("File (and/or file name) is too large for QR code!");
                 return;
             }
             let b64 = encodeURIComponent(dataUrl.split(',')[1]); // will include data url preamble
             let url = `${WEB_URL_PREFIX}?f=${filename}#${b64}`
             document.getElementById('qrcode').innerHTML = '';
-            new QRCode(document.getElementById('qrcode'), {
-                text: url,
-                width: 512,
-                height: 512
+            const canvas = document.createElement('canvas');
+            document.getElementById('qrcode').appendChild(canvas);
+            new QRious({
+                element: canvas,
+                value: url,
+                size: 512
             });
         }
         document.getElementById('encodeButton').addEventListener('click', function () {
